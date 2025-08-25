@@ -43,3 +43,13 @@ I love learning by doing and experimenting with different ideas 🚀
 - ✨ Always curious to learn and try something new  
 
 ---
+
+---
+
+## 📊 GitHub Overview  
+
+![Diya's GitHub Stats](https://github-readme-stats.vercel.app/api?username=dicoder4&show_icons=true&theme=tokyonight)  
+![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=dicoder4&layout=compact&theme=tokyonight)  
+![GitHub Streak](https://github-readme-streak-stats.herokuapp.com/?user=dicoder4&theme=tokyonight)  
+
+---
