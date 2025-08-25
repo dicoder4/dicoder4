@@ -1,54 +1,25 @@
-# Hi, I'm Diya 👋
+# Hi, I'm Diya 👋  
 
-I’m a Computer Science student who enjoys exploring the tech world and building projects that solve real problems.  
-My interests lie in **software development, cybersecurity, and emerging technologies**.  
-I love learning by doing and experimenting with different ideas 🚀  
-
----
-
-## 🌟 Featured Projects
-
-- **🔑 Cryptkeep**  
-  A password safe box with features like OTP verification and Face ID login.  
-  Focused on **security and cryptography**.  
-  [View Repo](https://github.com/anisha816303/cryptkeep.git)
-
-- **📊 Smart Health Tracker (HealthOps PHDS)**  
-  A personal health data logging system that started as a DBMS project and grew into a full-stack + DevOps app.  
-  Focuses on **tracking health activities and data visualization**.  
-  [View Repo](https://github.com/dicoder4/healthops-phds.git)
-
-- **🌊 Digital Twin Flood Evacuation**  
-  A simulation system that helps plan evacuation routes during floods using digital twin concepts.  
-  [Live App](https://digital-twin-flood-evacuation.streamlit.app/)
-
-- **🏥 Blockchain Healthcare Data Sharing**  
-  A blockchain-based system to securely share healthcare records across organizations.  
-  Built on Ethereum + smart contracts.  
-
-- **🍴 MoOdMeNU**  
-  A personal project to manage my picky eating habits while exploring **agentic AI and MCP**.  
-  [View Repo](https://github.com/dicoder4/MoOdMeNU)
-
-- **💼 JPMC Project (CFG Mumbai 2025)**  
-  Team project for an NGO-UPAY.  
-  [View Repo](https://github.com/cfgmumbai25/Team-16.git)
+I’m a CSE student exploring the tech world through projects and experiments.  
+Interested in **software development, cybersecurity, and emerging technologies**.  
+Always learning, always building 🚀  
 
 ---
 
-## 🌱 About Me
+## 🌟 Projects  
 
-- 🎓 CSE (2022–26)  
-- 💡 Exploring **software dev, cybersecurity, and digital innovation**  
-- ✨ Always curious to learn and try something new  
-
----
+- 🔑 [Cryptkeep](https://github.com/anisha816303/cryptkeep.git) — Password safe box  
+- 📊 [Smart Health Tracker (HealthOps PHDS)](https://github.com/dicoder4/healthops-phds.git) — Health data logging system  
+- 🌊 [Digital Twin Flood Evacuation](https://digital-twin-flood-evacuation.streamlit.app/) — Evacuation route simulation  
+- 🏥 Blockchain Healthcare Data Sharing — Secure health record sharing  
+- 🍴 [MoOdMeNU](https://github.com/dicoder4/MoOdMeNU) — Picky eating + agentic AI  
+- 💼 [JPMC Project](https://github.com/cfgmumbai25/Team-16.git) — Financial software challenge  
 
 ---
 
 ## 📊 GitHub Overview  
 
-![Diya's GitHub Stats](https://github-readme-stats.vercel.app/api?username=dicoder4&show_icons=true&theme=tokyonight)  
+![GitHub Stats](https://github-readme-stats.vercel.app/api?username=dicoder4&show_icons=true&theme=tokyonight)  
 ![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=dicoder4&layout=compact&theme=tokyonight)  
 ![GitHub Streak](https://github-readme-streak-stats.herokuapp.com/?user=dicoder4&theme=tokyonight)  
 
