@@ -1,6 +1,6 @@
 <div align="center">
 
-# 👋 Hey, I'm dicoder4
+# 👋 Hey, I'm Diya
 
 🌊 Final-year CSE student | Code, chaos & curiosity
 
