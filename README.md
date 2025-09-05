@@ -96,8 +96,8 @@ Collaboration · Problem-Solving · Time Management · Presentation
 - Always up for collabs, brainstorms, or just vibing with fellow builders.
 
 ---
-
 <p align="center">
-  <img src="./dist/banner.svg" width="100%" alt="Dynamic Time-of-Day Banner" />
+  <img src="./dist/banner.svg?t=1" width="100%" alt="Dynamic Time-of-Day Banner"/>
 </p>
+
 
