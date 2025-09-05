@@ -97,6 +97,7 @@ Collaboration · Problem-Solving · Time Management · Presentation
 
 ---
 
-<div align="center">
-  <sub>Drop a star ⭐ on any project that made you smile—or fixed a bug in your life.</sub>
-</div>
+<p align="center">
+  <img src="./dist/banner.svg" width="100%" alt="Dynamic Time-of-Day Banner" />
+</p>
+
