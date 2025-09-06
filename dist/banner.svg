@@ -8,6 +8,12 @@
         font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
         font-size="22" fill="#10b981">10:00pm–11:59pm</text>
 
+  <!-- timezone pill (IST / GMT offset) -->
+  <rect x="24" y="84" rx="10" width="200" height="36" fill="#0b1220" opacity="0.68"/>
+  <text x="124" y="108" text-anchor="middle"
+        font-family="Inter, Segoe UI, Roboto, Arial"
+        font-size="14" fill="#a7f3d0">IST (GMT+05:30)</text>
+
   <!-- footer update notice (fun) -->
   <text x="600" y="580" text-anchor="middle"
         font-family="Inter, Segoe UI, Roboto, Arial"
