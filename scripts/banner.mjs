@@ -26,8 +26,7 @@ function fmt(mins) {
   return `${h12}:${String(m).padStart(2, "0")}${ampm}`;
 }
 
-// ---- Slots (mins since midnight, inclusive of start, exclusive of end) ----
-// Add/adjust as needed.
+// ---- Slots (mins since midnight, inclusive start, exclusive end) ----
 const SLOTS = [
   { key: "sleep",         start:   0, end: 360,  label: () => `${fmt(0)}–${fmt(359)}` },          // 00:00–05:59
   { key: "yoga",          start: 360, end: 480,  label: () => `${fmt(360)}–${fmt(479)}` },         // 06:00–07:59
@@ -78,6 +77,7 @@ const dataUri = `data:image/png;base64,${imgBuf.toString("base64")}`;
 
 // Build a visible slot label like “12:00am–5:59am”
 const slotLabel = slot.label();
+const tzLabel = "IST (GMT+05:30)"; // <--- ADDED
 
 // --- SVG output (no live clock text = fewer diffs) ---
 const svg = `<?xml version="1.0" encoding="UTF-8"?>
@@ -89,6 +89,12 @@ const svg = `<?xml version="1.0" encoding="UTF-8"?>
   <text x="174" y="57" text-anchor="middle"
         font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
         font-size="22" fill="#10b981">${slotLabel}</text>
+
+  <!-- timezone pill (IST / GMT offset) -->
+  <rect x="24" y="84" rx="10" width="200" height="36" fill="#0b1220" opacity="0.68"/>
+  <text x="124" y="108" text-anchor="middle"
+        font-family="Inter, Segoe UI, Roboto, Arial"
+        font-size="14" fill="#a7f3d0">${tzLabel}</text>
 
   <!-- footer update notice (fun) -->
   <text x="600" y="580" text-anchor="middle"
