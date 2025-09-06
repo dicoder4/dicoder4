@@ -28,14 +28,14 @@ function istTime() {
 // --- Decide period by minute-of-day ---
 function getPeriod() {
   const { total } = istHM();
-  // minute marks
   const m = total;
   if (m >= 360 && m < 480) return "yoga";                // 06:00–07:59
   if (m >= 480 && m < 720) return "morning-coding";      // 08:00–11:59
   if (m >= 720 && m < 990) return "afternoon";           // 12:00–16:29
   if (m >= 990 && m < 1020) return "coffee";             // 16:30–16:59
   if (m >= 1020 && m < 1140) return "sunset-work";       // 17:00–18:59
-  if (m >= 1140 && m < 1440) return "bed-work";          // 19:00–23:59
+  if (m >= 1140 && m < 1320) return "night-work";        // 19:00–21:59
+  if (m >= 1320 && m < 1440) return "bed-work";          // 22:00–23:59
   return "sleep";                                        // 00:00–05:59
 }
 
@@ -49,6 +49,7 @@ const artMap = {
   "afternoon": "banner-afternoon.png",
   "coffee": "banner-coffee.png",
   "sunset-work": "banner-sunset-work.png",
+  "night-work": "banner-night-work.png",
   "bed-work": "banner-bed-work.png",
   "sleep": "banner-sleep.png",
 };
@@ -59,7 +60,7 @@ const imgPath = path.join(process.cwd(), "art", artMap[period]);
 const imgBuf = fs.readFileSync(imgPath);
 const dataUri = `data:image/png;base64,${imgBuf.toString("base64")}`;
 
-// --- SVG output with timezone + update note ---
+// --- SVG output ---
 const svg = `<?xml version="1.0" encoding="UTF-8"?>
 <svg width="1200" height="600" viewBox="0 0 1200 600" xmlns="http://www.w3.org/2000/svg">
   <image href="${dataUri}" x="0" y="0" width="1200" height="600" preserveAspectRatio="xMidYMid slice"/>
