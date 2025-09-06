@@ -2,7 +2,16 @@ name: Update Dynamic Banner
 
 on:
   schedule:
-    - cron: "*/5 * * * *"   # every 5 minutes
+    # runs once at the start of each slot (UTC times)
+    - cron: "30 18 * * *"   # 00:00 IST
+    - cron: "30 0 * * *"    # 06:00 IST
+    - cron: "30 2 * * *"    # 08:00 IST
+    - cron: "30 6 * * *"    # 12:00 IST
+    - cron: "0 11 * * *"    # 16:30 IST
+    - cron: "30 11 * * *"   # 17:00 IST
+    - cron: "30 13 * * *"   # 19:00 IST
+    - cron: "30 16 * * *"   # 22:00 IST
+
   workflow_dispatch:
 
 permissions:
@@ -21,7 +30,9 @@ jobs:
           if [[ -n "$(git status --porcelain)" ]]; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add dist/banner.svg
-            git commit -m "chore: update banner"
+            git add dist/banner.svg dist/banner_state.json
+            git commit -m "chore: update banner (slot change)"
             git push
+          else
+            echo "No changes to commit."
           fi
