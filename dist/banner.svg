@@ -6,7 +6,7 @@
   <rect x="860" y="18" width="320" height="62" rx="12" fill="#0b1220" opacity="0.78"/>
   <text x="1020" y="56" text-anchor="middle"
         font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
-        font-size="24" fill="#10b981">19:59 IST (GMT+05:30)</text>
+        font-size="24" fill="#10b981">20:10 IST (GMT+05:30)</text>
 
   <!-- footer update notice -->
   <text x="600" y="580" text-anchor="middle"
