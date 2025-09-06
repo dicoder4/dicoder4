@@ -5,6 +5,7 @@ const outDir = path.join(process.cwd(), "dist");
 if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true });
 
 const statePath = path.join(outDir, "banner_state.json");
+const LAYOUT_VERSION = 3; // bump when you change badge layout/text
 
 // ---- IST helpers ----
 function istHM() {
@@ -26,7 +27,7 @@ function fmt(mins) {
   return `${h12}:${String(m).padStart(2, "0")}${ampm}`;
 }
 
-// ---- Slots (mins since midnight, inclusive start, exclusive end) ----
+// ---- Slots (inclusive start, exclusive end) ----
 const SLOTS = [
   { key: "sleep",         start:   0, end: 360,  label: () => `${fmt(0)}–${fmt(359)}` },          // 00:00–05:59
   { key: "yoga",          start: 360, end: 480,  label: () => `${fmt(360)}–${fmt(479)}` },         // 06:00–07:59
@@ -45,11 +46,11 @@ function currentSlot() {
 
 const slot = currentSlot();
 
-// --- Read last state: skip writing if same slot (keeps commits minimal) ---
+// --- Read last state: skip writing if same slot + same layout (keeps commits minimal) ---
 let last = null;
 try { last = JSON.parse(fs.readFileSync(statePath, "utf8")); } catch {}
-if (last && last.key === slot.key) {
-  console.log(`No change: still "${slot.key}". Skipping banner update.`);
+if (last && last.key === slot.key && last.layoutVersion === LAYOUT_VERSION) {
+  console.log(`No change: still "${slot.key}" (layout v${LAYOUT_VERSION}). Skipping banner update.`);
   process.exit(0);
 }
 
@@ -75,34 +76,38 @@ if (!fs.existsSync(imgPath)) {
 const imgBuf = fs.readFileSync(imgPath);
 const dataUri = `data:image/png;base64,${imgBuf.toString("base64")}`;
 
-// Build a visible slot label like “12:00am–5:59am”
 const slotLabel = slot.label();
-const tzLabel = "IST (GMT+05:30)"; // <--- ADDED
+const tzLabel = "IST (GMT+05:30)";
 
-// --- SVG output (no live clock text = fewer diffs) ---
+// --- SVG with combined badge + soft shadow + fun footer ---
 const svg = `<?xml version="1.0" encoding="UTF-8"?>
 <svg width="1200" height="600" viewBox="0 0 1200 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="6" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
   <image href="${dataUri}" x="0" y="0" width="1200" height="600" preserveAspectRatio="xMidYMid slice"/>
 
-  <!-- slot label pill -->
-  <rect x="24" y="24" rx="12" width="300" height="50" fill="#0b1220" opacity="0.78"/>
-  <text x="174" y="57" text-anchor="middle"
-        font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
-        font-size="22" fill="#10b981">${slotLabel}</text>
+  <!-- Combined slot + timezone badge -->
+  <g transform="translate(24,24)" filter="url(#softShadow)">
+    <rect width="420" height="96" rx="18" fill="#0b1220" opacity="0.88"/>
+    <text x="24" y="46"
+          font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+          font-size="28" fill="#34d399">${slotLabel}</text>
+    <text x="24" y="76"
+          font-family="Inter, Segoe UI, Roboto, Arial"
+          font-size="15" fill="#a7f3d0">${tzLabel} • auto-switching banner</text>
+  </g>
 
-  <!-- timezone pill (IST / GMT offset) -->
-  <rect x="24" y="84" rx="10" width="200" height="36" fill="#0b1220" opacity="0.68"/>
-  <text x="124" y="108" text-anchor="middle"
-        font-family="Inter, Segoe UI, Roboto, Arial"
-        font-size="14" fill="#a7f3d0">${tzLabel}</text>
-
-  <!-- footer update notice (fun) -->
+  <!-- Footer vibe line -->
   <text x="600" y="580" text-anchor="middle"
         font-family="Inter, Segoe UI, Roboto, Arial"
         font-size="18" fill="#6ee7b7">⏱ Watch me change as your day rolls by</text>
 </svg>`;
 
 fs.writeFileSync(path.join(outDir, "banner.svg"), svg, "utf8");
-fs.writeFileSync(statePath, JSON.stringify({ key: slot.key, slotLabel }, null, 2), "utf8");
+fs.writeFileSync(statePath, JSON.stringify({ key: slot.key, slotLabel, layoutVersion: LAYOUT_VERSION }, null, 2), "utf8");
 
-console.log(`Updated slot: ${last?.key ?? "(none)"} → ${slot.key} (${slotLabel}).`);
+console.log(`Updated slot: ${last?.key ?? "(none)"} → ${slot.key} (${slotLabel}), layout v${LAYOUT_VERSION}.`);
