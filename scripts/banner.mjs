@@ -73,7 +73,7 @@ const svg = `<?xml version="1.0" encoding="UTF-8"?>
   <!-- footer update notice -->
   <text x="600" y="580" text-anchor="middle"
         font-family="Inter, Segoe UI, Roboto, Arial"
-        font-size="18" fill="#6ee7b7">⏱ Updates every few minutes · ${period.replace("-", " ").toUpperCase()}</text>
+        font-size="18" fill="#6ee7b7">⏱ Watch me change as your day rolls by</text>
 </svg>`;
 
 fs.writeFileSync(path.join(outDir, "banner.svg"), svg, "utf8");
