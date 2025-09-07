@@ -7,13 +7,17 @@
 </div>
 
 ---
+<p align="center">
+  <img src="./dist/banner.svg?t=1" width="100%" alt="Dynamic Time-of-Day Banner"/>
+</p>
+
 
 ## 🪄 About Me
 
 Hey there!  
-Currently surviving my 4th year of Computer Science and Engineering—building, breaking, and occasionally fixing things.  
+I'm currently in my 4th year of Computer Science and Engineering—building, breaking, and occasionally fixing things.  
 I'm all about tech that actually does something useful (or at least, something cool).  
-When not debugging, you’ll catch me down a YouTube spiral, hunting for new tracks, or being impossibly picky about my next snack.
+When not debugging, you’ll catch me down a YouTube spiral, hunting for new spotify tracks, or being impossibly picky about my next snack.
 
 ---
 
@@ -96,8 +100,5 @@ Collaboration · Problem-Solving · Time Management · Presentation
 - Always up for collabs, brainstorms, or just vibing with fellow builders.
 
 ---
-<p align="center">
-  <img src="./dist/banner.svg?t=1" width="100%" alt="Dynamic Time-of-Day Banner"/>
-</p>
 
 
