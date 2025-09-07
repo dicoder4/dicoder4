@@ -79,9 +79,9 @@ const imgBuf = fs.readFileSync(imgPath);
 const dataUri = `data:image/png;base64,${imgBuf.toString("base64")}`;
 
 const slotLabel = slot.label();
+const tzLabel = "IST (GMT+05:30)";
 
-// --- SVG with glassy neon badge + soft vignette + fun footer ---
-// --- SVG with combined badge + soft shadow + fun footer ---
+// --- SVG with combined badge + soft shadow + footer ---
 const svg = `<?xml version="1.0" encoding="UTF-8"?>
 <svg width="1200" height="600" viewBox="0 0 1200 600" xmlns="http://www.w3.org/2000/svg">
   <defs>
@@ -95,21 +95,13 @@ const svg = `<?xml version="1.0" encoding="UTF-8"?>
   <!-- Combined slot + timezone badge -->
   <g transform="translate(24,24)" filter="url(#softShadow)">
     <rect width="420" height="96" rx="18" fill="#0b1220" opacity="0.88"/>
-    
     <text x="24" y="46"
           font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
-          font-size="28" fill="#34d399">
-      ${slotLabel}
-    </text>
-
+          font-size="28" fill="#34d399">${slotLabel}</text>
     <text x="24" y="76"
           font-family="Inter, Segoe UI, Roboto, Arial"
-          font-size="15" fill="#a7f3d0">
-      ${tzLabel} • auto-switching banner
-    </text>
+          font-size="15" fill="#a7f3d0">${tzLabel} • auto-switching banner</text>
   </g>
-</svg>`;
-
 
   <!-- footer vibe line -->
   <text x="600" y="580" text-anchor="middle"
