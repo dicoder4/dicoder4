@@ -80,34 +80,70 @@ const slotLabel = slot.label();
 const tzLabel = "IST (GMT+05:30)";
 
 // --- SVG with combined badge + soft shadow + fun footer ---
+// --- SVG with glassy neon badge + soft vignette + fun footer ---
 const svg = `<?xml version="1.0" encoding="UTF-8"?>
 <svg width="1200" height="600" viewBox="0 0 1200 600" xmlns="http://www.w3.org/2000/svg">
   <defs>
+    <!-- soft drop shadow -->
     <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
       <feDropShadow dx="0" dy="2" stdDeviation="6" flood-opacity="0.25"/>
     </filter>
+
+    <!-- neon gradient for border -->
+    <linearGradient id="neon" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%"  stop-color="#34d399"/>
+      <stop offset="100%" stop-color="#60a5fa"/>
+    </linearGradient>
+
+    <!-- subtle vignette -->
+    <radialGradient id="vignette" cx="50%" cy="45%" r="65%">
+      <stop offset="60%" stop-color="rgba(0,0,0,0)"/>
+      <stop offset="100%" stop-color="rgba(0,0,0,0.35)"/>
+    </radialGradient>
+
+    <!-- ultra subtle grain -->
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch" result="noisy"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer>
+        <feFuncA type="table" tableValues="0 0 0 0.04 0.06 0.04 0"/>
+      </feComponentTransfer>
+    </filter>
   </defs>
 
+  <!-- background image -->
   <image href="${dataUri}" x="0" y="0" width="1200" height="600" preserveAspectRatio="xMidYMid slice"/>
 
-  <!-- Combined slot + timezone badge -->
+  <!-- vignette overlay -->
+  <rect x="0" y="0" width="1200" height="600" fill="url(#vignette)"/>
+
+  <!-- ===== Glass / neon badge (top-left) ===== -->
   <g transform="translate(24,24)" filter="url(#softShadow)">
-    <rect width="420" height="96" rx="18" fill="#0b1220" opacity="0.88"/>
-    <text x="24" y="46"
+    <!-- border -->
+    <rect width="460" height="108" rx="18" fill="none" stroke="url(#neon)" stroke-width="2.5"/>
+    <!-- glass body -->
+    <rect width="460" height="108" rx="18" fill="#0b1220" opacity="0.82"/>
+
+    <!-- top line: slot window with clock icon -->
+    <text x="22" y="48"
           font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
-          font-size="28" fill="#34d399">${slotLabel}</text>
-    <text x="24" y="76"
+          font-size="30" fill="#d1fae5">🕒 ${slotLabel}</text>
+
+    <!-- divider hairline -->
+    <rect x="22" y="58" width="416" height="1" fill="#1f2937" opacity="0.9"/>
+
+    <!-- bottom line: timezone + tag -->
+    <text x="22" y="84"
           font-family="Inter, Segoe UI, Roboto, Arial"
           font-size="15" fill="#a7f3d0">${tzLabel} • auto-switching banner</text>
   </g>
 
-  <!-- Footer vibe line -->
+  <!-- micro grain to tie it together (very subtle) -->
+  <rect x="0" y="0" width="1200" height="600" filter="url(#grain)" opacity="0.35"/>
+
+  <!-- footer vibe line -->
   <text x="600" y="580" text-anchor="middle"
         font-family="Inter, Segoe UI, Roboto, Arial"
         font-size="18" fill="#6ee7b7">⏱ Watch me change as your day rolls by</text>
 </svg>`;
 
-fs.writeFileSync(path.join(outDir, "banner.svg"), svg, "utf8");
-fs.writeFileSync(statePath, JSON.stringify({ key: slot.key, slotLabel, layoutVersion: LAYOUT_VERSION }, null, 2), "utf8");
-
-console.log(`Updated slot: ${last?.key ?? "(none)"} → ${slot.key} (${slotLabel}), layout v${LAYOUT_VERSION}.`);
