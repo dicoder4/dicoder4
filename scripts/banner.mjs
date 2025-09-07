@@ -5,14 +5,16 @@ const outDir = path.join(process.cwd(), "dist");
 if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true });
 
 const statePath = path.join(outDir, "banner_state.json");
-const LAYOUT_VERSION = 3; // bump when you change badge layout/text
+const LAYOUT_VERSION = 4; // bump when you change badge layout/text
 
 // ---- IST helpers ----
 function istHM() {
   const d = new Date();
   const f = new Intl.DateTimeFormat("en-GB", {
     timeZone: "Asia/Kolkata",
-    hour: "2-digit", minute: "2-digit", hour12: false,
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
   });
   const [hh, mm] = f.format(d).split(":").map(Number);
   return { hh, mm, total: hh * 60 + mm };
@@ -29,14 +31,14 @@ function fmt(mins) {
 
 // ---- Slots (inclusive start, exclusive end) ----
 const SLOTS = [
-  { key: "sleep",         start:   0, end: 360,  label: () => `${fmt(0)}–${fmt(359)}` },          // 00:00–05:59
-  { key: "yoga",          start: 360, end: 480,  label: () => `${fmt(360)}–${fmt(479)}` },         // 06:00–07:59
-  { key: "morning-coding",start: 480, end: 720,  label: () => `${fmt(480)}–${fmt(719)}` },         // 08:00–11:59
-  { key: "afternoon",     start: 720, end: 990,  label: () => `${fmt(720)}–${fmt(989)}` },         // 12:00–16:29
-  { key: "coffee",        start: 990, end: 1020, label: () => `${fmt(990)}–${fmt(1019)}` },        // 16:30–16:59
-  { key: "sunset-work",   start: 1020,end: 1140, label: () => `${fmt(1020)}–${fmt(1139)}` },       // 17:00–18:59
-  { key: "night-work",    start: 1140,end: 1320, label: () => `${fmt(1140)}–${fmt(1319)}` },       // 19:00–21:59
-  { key: "bed-work",      start: 1320,end: 1440, label: () => `${fmt(1320)}–${fmt(1439)}` },       // 22:00–23:59
+  { key: "sleep",          start:    0, end:  360, label: () => `${fmt(0)}–${fmt(359)}` },    // 00:00–05:59
+  { key: "yoga",           start:  360, end:  480, label: () => `${fmt(360)}–${fmt(479)}` },  // 06:00–07:59
+  { key: "morning-coding", start:  480, end:  720, label: () => `${fmt(480)}–${fmt(719)}` },  // 08:00–11:59
+  { key: "afternoon",      start:  720, end:  990, label: () => `${fmt(720)}–${fmt(989)}` },  // 12:00–16:29
+  { key: "coffee",         start:  990, end: 1020, label: () => `${fmt(990)}–${fmt(1019)}` }, // 16:30–16:59
+  { key: "sunset-work",    start: 1020, end: 1140, label: () => `${fmt(1020)}–${fmt(1139)}` },// 17:00–18:59
+  { key: "night-work",     start: 1140, end: 1320, label: () => `${fmt(1140)}–${fmt(1319)}` },// 19:00–21:59
+  { key: "bed-work",       start: 1320, end: 1440, label: () => `${fmt(1320)}–${fmt(1439)}` },// 22:00–23:59
 ];
 
 function currentSlot() {
@@ -77,9 +79,7 @@ const imgBuf = fs.readFileSync(imgPath);
 const dataUri = `data:image/png;base64,${imgBuf.toString("base64")}`;
 
 const slotLabel = slot.label();
-const tzLabel = "IST (GMT+05:30)";
 
-// --- SVG with combined badge + soft shadow + fun footer ---
 // --- SVG with glassy neon badge + soft vignette + fun footer ---
 const svg = `<?xml version="1.0" encoding="UTF-8"?>
 <svg width="1200" height="600" viewBox="0 0 1200 600" xmlns="http://www.w3.org/2000/svg">
@@ -95,10 +95,10 @@ const svg = `<?xml version="1.0" encoding="UTF-8"?>
       <stop offset="100%" stop-color="#60a5fa"/>
     </linearGradient>
 
-    <!-- subtle vignette -->
+    <!-- subtle vignette (use stop-opacity instead of rgba()) -->
     <radialGradient id="vignette" cx="50%" cy="45%" r="65%">
-      <stop offset="60%" stop-color="rgba(0,0,0,0)"/>
-      <stop offset="100%" stop-color="rgba(0,0,0,0.35)"/>
+      <stop offset="60%" stop-color="#000000" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0.35"/>
     </radialGradient>
 
     <!-- ultra subtle grain -->
@@ -135,7 +135,7 @@ const svg = `<?xml version="1.0" encoding="UTF-8"?>
     <!-- bottom line: timezone + tag -->
     <text x="22" y="84"
           font-family="Inter, Segoe UI, Roboto, Arial"
-          font-size="15" fill="#a7f3d0">${tzLabel} • auto-switching banner</text>
+          font-size="15" fill="#a7f3d0">IST (GMT+05:30) • auto-switching banner</text>
   </g>
 
   <!-- micro grain to tie it together (very subtle) -->
@@ -147,3 +147,12 @@ const svg = `<?xml version="1.0" encoding="UTF-8"?>
         font-size="18" fill="#6ee7b7">⏱ Watch me change as your day rolls by</text>
 </svg>`;
 
+// Write outputs
+fs.writeFileSync(path.join(outDir, "banner.svg"), svg, "utf8");
+fs.writeFileSync(
+  statePath,
+  JSON.stringify({ key: slot.key, slotLabel, layoutVersion: LAYOUT_VERSION }, null, 2),
+  "utf8"
+);
+
+console.log(`Updated slot: ${last?.key ?? "(none)"} → ${slot.key} (${slotLabel}), layout v${LAYOUT_VERSION}.`);
